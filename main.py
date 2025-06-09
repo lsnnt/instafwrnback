@@ -1,8 +1,8 @@
 import requests
 
-SESSIONID='68094652496%3Anlflde47gTQyuU%3A1%3AAYc9gNWplawJYCuq01n6sgcEVdv2zIUst13wJj1Jrg'
-XIGAPPID='936619743392459'
-DSUSERID='68094652496'
+SESSIONID='<Your sessionid>'
+XIGAPPID='<Your X-IG-App-ID>'
+DSUSERID='<Your ds_user_id>'
 follower_users=[]
 following_but_not_follower_users=[]
 headers = {
