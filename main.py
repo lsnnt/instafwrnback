@@ -1,9 +1,10 @@
 import requests
 
-SESSIONID='<Your sessionid>'
-XIGAPPID='<Your X-IG-App-ID>'
-DSUSERID='<Your ds_user_id>'
-hashmap={}
+SESSIONID='68094652496%3Anlflde47gTQyuU%3A1%3AAYc9gNWplawJYCuq01n6sgcEVdv2zIUst13wJj1Jrg'
+XIGAPPID='936619743392459'
+DSUSERID='68094652496'
+follower_users=[]
+following_but_not_follower_users=[]
 headers = {
     'Accept': '*/*',
     'Accept-Encoding': 'gzip, deflate, br',
@@ -18,11 +19,11 @@ def getfollowers(next_max_id=""):
     response = requests.request("GET", url, headers=headers)
 
     for id in response.json()["users"]:
-        hashmap[id["username"]]=0
-    try:
-        return response.json()["next_max_id"]
-    except:
-        return None
+        follower_users.append(id["id"])
+    if "next_max_id" in response.json():
+        return getfollowers(response.json()["next_max_id"])
+    else:
+        print("Completed getting followers")
 def getfollowings(next_max_id=""):
     url = "https://www.instagram.com/api/v1/friendships/"+DSUSERID+"/following/?count=25&max_id="+next_max_id+"&search_surface=follow_list_page"
 
@@ -30,19 +31,16 @@ def getfollowings(next_max_id=""):
     response = requests.request("GET", url, headers=headers)
 
     for id in response.json()["users"]:
-        try:
-            hashmap[id["username"]]+=1
-        except KeyError as e:
-            # print(e)
-            print(id["username"])
-    try:
-        return response.json()["next_max_id"]
-    except:
-        return None
+        if id["id"] not in follower_users:
+            following_but_not_follower_users.append(id["username"])
+    if "next_max_id" in response.json():
+        return getfollowings(response.json()["next_max_id"])
+    else:
+        print("Completed getting followings")
 if __name__=='__main__':
-    next_max = getfollowers()
-    while next_max!=None:
-        next_max=getfollowers(next_max_id=next_max)
-    next_max = getfollowings()
-    while next_max!=None:
-        next_max=getfollowings(next_max_id=next_max)
+    getfollowers()
+    getfollowings()
+    nnt = list(set(following_but_not_follower_users))
+    for i in nnt:
+        print(i)
+    print(f"Found {len(nnt)} users not following you")
