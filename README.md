@@ -27,3 +27,22 @@ https://github.com/lsnnt/instafwrnback/blob/359e1afcbea23a9b65953166c6b476d20d65
 ```
 python3 main.py
 ```
+
+# Using Docker 🐳
+#### Clone the repo and get into it
+```
+git clone https://github.com/lsnnt/instafwrnback && cd instafwrnback
+```
+#### Set variables in line 3-5
+
+https://github.com/lsnnt/instafwrnback/blob/359e1afcbea23a9b65953166c6b476d20d6553e7/main.py#L3-L5
+
+#### Build the Docker image
+```
+docker build -t instafwrnback .
+```
+#### Run the builded image
+```
+docker run --rm instafwrnback
+```
+

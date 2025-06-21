@@ -38,9 +38,13 @@ def getfollowings(next_max_id=""):
     else:
         print("Completed getting followings")
 if __name__=='__main__':
-    getfollowers()
-    getfollowings()
-    nnt = list(set(following_but_not_follower_users))
-    for i in nnt:
-        print(i)
-    print(f"Found {len(nnt)} users not following you")
+    try:
+        getfollowers()
+        getfollowings()
+        nnt = list(set(following_but_not_follower_users))
+        for i in nnt:
+            print(i)
+        print(f"Found {len(nnt)} users not following you")
+    except:
+        print("Set the variables on line 3-5 correctly")
+        exit(0)
